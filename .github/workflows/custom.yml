@@ -48,12 +48,6 @@ on:
         default: ''
         type: string
 
-      dtb:
-        description: '暂不可用, 待实现'
-        required: false
-        default: ''
-        type: string
-
       sn: 
         description: 'sn'
         required: false
