@@ -12,6 +12,15 @@ on:
     types: [opened]
   workflow_dispatch:
     inputs:
+      machine:
+        description: 'DS3615xs DS3617xs DS918+ DS920+ DS3622xs+'
+        required: false
+        default: 'any' 
+        type: choice
+        options:
+        - any
+        - TS453DMINI
+
       platform:
         description: 'DS3615xs DS3617xs DS918+ DS920+ DS3622xs+'
         required: true
@@ -138,6 +147,7 @@ jobs:
                 issues = 'false'
                 iscustom = 'true'
 
+                machine = 'any'
                 platform = 'DS918+'
                 version = '7.1.0-42661'
                 sataportmap = ''
@@ -169,6 +179,12 @@ jobs:
                             else:
                                 iscustom = 'false'
                                 errinfo = 'platform parameter error'
+                                
+                        if 'machine' in body:
+                            if body['machine'] in ['any', 'TS453DMINI']:
+                              machine = body['machine']
+                            else:
+                              machine = 'any'
 
                         if 'version' in body:
                             if body['version'] in ['7.1.0-42661', '7.0.1-42218']:
@@ -266,6 +282,7 @@ jobs:
                         iscustom = 'false'
                 else:
                     platform = '${{ inputs.platform }}'
+                    machine = '${{ inputs.machine }}'
                     version = '${{ inputs.version }}'
                     maps = [x.strip() for x in re.split(',| |\|','${{ inputs.map }}') if x.strip()!='']
                     if len(maps) != 2:
@@ -288,6 +305,7 @@ jobs:
                 set_output('errinfo', errinfo)
 
                 set_output('platform', platform)
+                set_output('machine', machine)
                 set_output('version', version)
                 set_output('sataportmap', sataportmap)
                 set_output('diskidxmap', diskidxmap)
@@ -490,7 +508,11 @@ jobs:
 
           if [ ${{ steps.info.outputs.platform }} == 'DS920+' ]; then
             ./ext-manager.sh add https://raw.githubusercontent.com/pocopico/rp-ext/master/redpill-dtb-static/rpext-index.json
-            wget https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/ds920p.dts
+            if [ ${{ steps.info.outputs.machine }} == 'TS453DMINI' ]; then
+              wget https://raw.githubusercontent.com/htmambo/Redpill_CustomBuild/main/ts453dmini/ds920p.dts
+            else
+              wget https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/ds920p.dts
+            fi
 
             # if [ -n ${{ steps.info.outputs.dtb }} ]; then
             #   dtbs=${{ steps.info.outputs.dtb }}
