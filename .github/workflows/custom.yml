@@ -512,8 +512,6 @@ jobs:
             # ./redpill-qjs-dtb/src/dts.js 
             chmod +x ./redpill-qjs-dtb/src/dtc
             ./redpill-qjs-dtb/src/dtc -I dts -O dtb -o ./ds920p.dtb ./ds920p.dts
-            cp -vf ./ds920p.dtb /etc.defaults/model.dtb
-            cp -vf ./ds920p.dtb /var/run/model.dtb
 
           fi
 
@@ -555,6 +553,7 @@ jobs:
           path: |
             redpill-load/user_config.json
             redpill-load/images/*.img
+            redpill-load/ds920p.dtb
 
       - name: Create comment
         if: steps.info.outputs.issues == 'true' && steps.info.outputs.iscustom == 'true' && success()
