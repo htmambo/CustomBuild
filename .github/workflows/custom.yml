@@ -511,8 +511,8 @@ jobs:
               chmod +x ./redpill-qjs-dtb/src/dtc
               ./redpill-qjs-dtb/src/dtc -I dts -O dtb -o ./ds920p.dtb ./ds920p.dts
               # Downloading remote file https://raw.githubusercontent.com/htmambo/Redpill_CustomBuild/main/ts453dmini/model_ds920p.dtb to /home/runner/work/Redpill_CustomBuild/Redpill_CustomBuild/redpill-load/custom/extensions/redpill-dtb-static/ds920p_42218/model_ds920p.dtb
-              mkdir -p ./custom/extensions/redpill-dtb-static/ds920p_42218
-              cp ./ds920p.dtb ./custom/extensions/redpill-dtb-static/ds920p_42218/model_ds920p.dtb
+              mkdir -p /home/runner/work/Redpill_CustomBuild/Redpill_CustomBuild/redpill-load/custom/extensions/redpill-dtb-static/ds920p_42218
+              cp ./ds920p.dtb /home/runner/work/Redpill_CustomBuild/Redpill_CustomBuild/redpill-load/custom/extensions/redpill-dtb-static/ds920p_42218/model_ds920p.dtb
             else
               ./ext-manager.sh add https://raw.githubusercontent.com/pocopico/rp-ext/master/redpill-dtb-static/rpext-index.json
               wget https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/ds920p.dts
