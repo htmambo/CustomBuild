@@ -114,7 +114,7 @@ jobs:
 
           sudo apt update
           sudo apt upgrade -y
-          sudo apt install curl bspatch jq git -y
+          sudo apt install curl bspatch jq git qjs -y
           python -m pip install --upgrade pip setuptools
 
       - name: Get Issues
@@ -510,47 +510,11 @@ jobs:
 
             # Dynamic generation
             # ./redpill-qjs-dtb/src/dts.js 
-            ./redpill-qjs-dtb/src/dtc -I dts -O dtb -o ./model_r2.dtb ./ds920p.dts
+            chmod +x ./redpill-qjs-dtb/src/dtc
+            ./redpill-qjs-dtb/src/dtc -I dts -O dtb -o ./model_r2.dtb ./output.dts
             cp -vf ./model_r2.dtb /etc.defaults/model.dtb
             cp -vf ./model_r2.dtb /var/run/model.dtb
 
-            # if [ -n ${{ steps.info.outputs.dtb }} ]; then
-            #   dtbs=${{ steps.info.outputs.dtb }}
-            #
-            #   let diskslot=1
-            #   for disk in $localdisks; do
-            #     diskpath=$(udevadm info --query path --name $disk | awk -F "\/" '{print $4 ":" $5 }' | awk -F ":" '{print $2 ":" $3 "," $6}' | sed 's/,*$//')
-            #     if [ "$HYPERVISOR" == "VMware" ]; then
-            #         diskport=$(udevadm info --query path --name $disk | sed -n '/target/{s/.*target[1-9]//;p;}' | awk -F: '{print $1}')
-            #     else
-            #         diskport=$(udevadm info --query path --name $disk | sed -n '/target/{s/.*target//;p;}' | awk -F: '{print $1}')
-            #     fi
-            # 
-            #     echo "Found local disk $disk with path $diskpath, adding into internal_slot $diskslot with portnumber $diskport"
-            #     if [ "${dtbfile}" == "ds920p" ]; then
-            #         sed -i "/internal_slot\@${diskslot} {/!b;n;n;n;n;n;n;n;cpcie_root = \"$diskpath\";" ${dtbfile}.dts
-            #         sed -i "/internal_slot\@${diskslot} {/!b;n;n;n;n;n;n;n;n;cata_port = <0x$diskport>;" ${dtbfile}.dts
-            #         let diskslot=$diskslot+1
-            #     else
-            #         sed -i "/internal_slot\@${diskslot} {/!b;n;n;n;n;n;cpcie_root = \"$diskpath\";" ${dtbfile}.dts
-            #         sed -i "/internal_slot\@${diskslot} {/!b;n;n;n;n;n;n;cata_port = <0x$diskport>;" ${dtbfile}.dts
-            #         let diskslot=$diskslot+1
-            #     fi
-            #   done
-            #
-            #   let nvmeslot=1
-            #   for nvme in $localnvme; do
-            #       nvmepath=$(udevadm info --query path --name $nvme | awk -F "\/" '{print $4 ":" $5 }' | awk -F ":" '{print $2 ":" $3 "," $6}' | sed 's/,*$//')
-            #       echo "Found local nvme $nvme with path $nvmepath, adding into m2_card $nvmeslot"
-            #       if [ "${dtbfile}" == "ds920p" ]; then
-            #           sed -i "/nvme_slot\@${nvmeslot} {/!b;n;cpcie_root = \"$nvmepath\";" ${dtbfile}.dts
-            #           let diskslot=$diskslot+1
-            #       else
-            #           sed -i "/m2_card\@${nvmeslot} {/!b;n;n;n;cpcie_root = \"$nvmepath\";" ${dtbfile}.dts
-            #           let nvmeslot=$diskslot+1
-            #       fi
-            #   done
-            # fi
           fi
 
           # 添加扩展驱动
