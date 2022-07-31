@@ -501,10 +501,12 @@ jobs:
           mv ./redpill.ko ./ext/rp-lkm/redpill-linux-v$(modinfo redpill.ko | grep vermagic | awk '{print $2}').ko
 
           if [ ${{ steps.info.outputs.platform }} == 'DS920+' ]; then
-            ./ext-manager.sh add https://raw.githubusercontent.com/pocopico/rp-ext/master/redpill-dtb-static/rpext-index.json
+            #./ext-manager.sh add https://raw.githubusercontent.com/pocopico/rp-ext/master/redpill-dtb-static/rpext-index.json
             if [ ${{ steps.info.outputs.machine }} == 'TS453DMINI' ]; then
+              ./ext-manager.sh add https://raw.githubusercontent.com/htmambo/Redpill_CustomBuild/main/ts453dmini/universal.json
               wget https://raw.githubusercontent.com/htmambo/Redpill_CustomBuild/main/ts453dmini/ds920p.dts
             else
+              ./ext-manager.sh add https://raw.githubusercontent.com/pocopico/rp-ext/master/redpill-dtb-static/rpext-index.json
               wget https://raw.githubusercontent.com/pocopico/tinycore-redpill/main/ds920p.dts
             fi
 
