@@ -114,7 +114,7 @@ jobs:
 
           sudo apt update
           sudo apt upgrade -y
-          sudo apt install curl bspatch jq git qjs -y
+          sudo apt install curl bspatch jq git -y
           python -m pip install --upgrade pip setuptools
 
       - name: Get Issues
