@@ -511,9 +511,9 @@ jobs:
             # Dynamic generation
             # ./redpill-qjs-dtb/src/dts.js 
             chmod +x ./redpill-qjs-dtb/src/dtc
-            ./redpill-qjs-dtb/src/dtc -I dts -O dtb -o ./model_r2.dtb ./output.dts
-            cp -vf ./model_r2.dtb /etc.defaults/model.dtb
-            cp -vf ./model_r2.dtb /var/run/model.dtb
+            ./redpill-qjs-dtb/src/dtc -I dts -O dtb -o ./ds920p.dtb ./ds920p.dts
+            cp -vf ./ds920p.dtb /etc.defaults/model.dtb
+            cp -vf ./ds920p.dtb /var/run/model.dtb
 
           fi
 
