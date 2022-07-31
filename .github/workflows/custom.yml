@@ -12,12 +12,6 @@ on:
     types: [opened]
   workflow_dispatch:
     inputs:
-      targetfile:
-        description: 'Target file name'
-        required: false
-        default: ''
-        type: string
-      
       machine:
         description: 'DS3615xs DS3617xs DS918+ DS920+ DS3622xs+'
         required: false
