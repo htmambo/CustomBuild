@@ -510,12 +510,7 @@ jobs:
 
             # Dynamic generation
             # ./redpill-qjs-dtb/src/dts.js 
-            qjs --std ./redpill-qjs-dtb/src/dts.js ./ds920p.dts ./output.dts.out
-            if [ $? -ne 0 ]; then
-                echo "auto generated dts file is broken"
-                exit 0
-            fi
-            ./redpill-qjs-dtb/src/dtc -I dts -O dtb -o ./model_r2.dtb ./output.dts.out
+            ./redpill-qjs-dtb/src/dtc -I dts -O dtb -o ./model_r2.dtb ./ds920p.dts
             cp -vf ./model_r2.dtb /etc.defaults/model.dtb
             cp -vf ./model_r2.dtb /var/run/model.dtb
 
